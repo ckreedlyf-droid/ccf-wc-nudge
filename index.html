@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CCF Welcome Center — Miner Nudge</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #F7F6F2;
+  --surface: #FFFFFF;
+  --surface2: #F0EFE9;
+  --border: #E2E0D8;
+  --border2: #CBC9BF;
+  --text: #1A1917;
+  --text2: #6B6960;
+  --text3: #9B9A93;
+  --accent: #2B5FD9;
+  --accent-bg: #EEF2FC;
+  --green: #1A7A4A;
+  --green-bg: #E8F5EE;
+  --amber: #A05C00;
+  --amber-bg: #FDF3E3;
+  --red: #C0392B;
+  --red-bg: #FDECEA;
+  --radius: 10px;
+  --radius-sm: 6px;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.topbar {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-mark {
+  width: 28px;
+  height: 28px;
+  background: var(--accent);
+  border-radius: 7px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+
+.logo-text {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.logo-sub {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: -2px;
+}
+
+.topbar-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.signin-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: var(--green);
+  background: var(--green-bg);
+  padding: 4px 10px;
+  border-radius: 20px;
+  font-weight: 500;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+.main { max-width: 720px; margin: 0 auto; padding: 28px 20px 60px; }
+
+.page-title { font-size: 22px; font-weight: 600; letter-spacing: -0.4px; margin-bottom: 4px; }
+.page-sub { color: var(--text2); font-size: 13px; margin-bottom: 24px; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+.card-title {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text3);
+  margin-bottom: 16px;
+}
+
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 12px; font-weight: 500; color: var(--text2); margin-bottom: 5px; }
+.field input {
+  width: 100%;
+  padding: 9px 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  transition: border-color 0.15s;
+  outline: none;
+}
+.field input:focus { border-color: var(--accent); }
+.field input.mono { font-family: 'DM Mono', monospace; font-size: 11px; }
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 18px;
+  border-radius: var(--radius-sm);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: all 0.15s;
+  text-decoration: none;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: white;
+  border-color: var(--accent);
+}
+.btn-primary:hover { opacity: 0.88; }
+.btn-primary:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.btn-outline {
+  background: transparent;
+  color: var(--text);
+  border-color: var(--border2);
+}
+.btn-outline:hover { background: var(--surface2); }
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text2);
+  border-color: transparent;
+  padding: 9px 12px;
+}
+.btn-ghost:hover { background: var(--surface2); color: var(--text); }
+
+.btn-google {
+  background: white;
+  color: var(--text);
+  border-color: var(--border2);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+}
+.btn-google:hover { box-shadow: 0 2px 6px rgba(0,0,0,0.12); }
+
+.btn-sm { padding: 6px 12px; font-size: 12px; }
+
+.btn-copy {
+  background: var(--accent-bg);
+  color: var(--accent);
+  border-color: transparent;
+}
+.btn-copy:hover { opacity: 0.8; }
+.btn-copy.copied { background: var(--green-bg); color: var(--green); }
+
+.btn-sent-toggle {
+  background: var(--green-bg);
+  color: var(--green);
+  border-color: transparent;
+}
+.btn-sent-toggle:hover { opacity: 0.8; }
+.btn-unsent {
+  background: var(--surface2);
+  color: var(--text2);
+  border-color: transparent;
+}
+.btn-unsent:hover { background: var(--border); }
+
+.metrics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.metric {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px 16px;
+  text-align: center;
+}
+.metric-val { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; }
+.metric-lbl { font-size: 11px; color: var(--text3); font-weight: 500; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 2px; }
+
+.metric.highlight { border-color: var(--accent); background: var(--accent-bg); }
+.metric.highlight .metric-val { color: var(--accent); }
+
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.toolbar-left { display: flex; align-items: center; gap: 8px; }
+.toolbar-right { display: flex; align-items: center; gap: 8px; }
+
+.miner-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+  overflow: hidden;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.miner-card.is-sent {
+  border-color: #6FCF97;
+  box-shadow: 0 0 0 3px rgba(26,122,74,0.06);
+}
+
+.miner-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px 16px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.miner-head:hover { background: var(--bg); }
+
+.avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent-bg);
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+
+.miner-card.is-sent .avatar { background: var(--green-bg); color: var(--green); }
+
+.miner-info { flex: 1; min-width: 0; }
+.miner-name { font-weight: 600; font-size: 14px; margin-bottom: 2px; }
+.miner-meta { font-size: 12px; color: var(--text2); display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px 7px;
+  border-radius: 4px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+}
+.badge-1 { background: var(--surface2); color: var(--text2); }
+.badge-2 { background: var(--accent-bg); color: var(--accent); }
+.badge-3a { background: var(--amber-bg); color: var(--amber); }
+.badge-3b { background: #F3E8FF; color: #6B21A8; }
+.badge-4 { background: var(--green-bg); color: var(--green); }
+
+.sent-pill {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--green-bg);
+  color: var(--green);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.chevron {
+  color: var(--text3);
+  font-size: 16px;
+  transition: transform 0.2s;
+  flex-shrink: 0;
+}
+.chevron.open { transform: rotate(180deg); }
+
+.miner-body { display: none; padding: 0 16px 16px; border-top: 1px solid var(--border); }
+.miner-body.open { display: block; }
+
+.msg-preview {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  font-size: 13px;
+  line-height: 1.8;
+  white-space: pre-wrap;
+  font-family: 'DM Sans', sans-serif;
+  color: var(--text);
+  margin: 12px 0;
+}
+
+.seeker-list { margin: 10px 0 14px; }
+.seeker-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 5px 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 12px;
+  color: var(--text2);
+}
+.seeker-row:last-child { border-bottom: none; }
+.seeker-name { font-weight: 500; color: var(--text); flex: 1; }
+
+.miner-actions { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+
+.number-tag {
+  font-family: 'DM Mono', monospace;
+  font-size: 11px;
+  background: var(--surface2);
+  padding: 2px 7px;
+  border-radius: 4px;
+  color: var(--text2);
+}
+
+.alert {
+  border-radius: var(--radius-sm);
+  padding: 12px 14px;
+  font-size: 13px;
+  margin-bottom: 14px;
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+}
+.alert-error { background: var(--red-bg); color: var(--red); border: 1px solid #F5C6C3; }
+.alert-success { background: var(--green-bg); color: var(--green); border: 1px solid #A8DFC0; }
+.alert-info { background: var(--accent-bg); color: var(--accent); border: 1px solid #BDD0F8; }
+
+.spinner {
+  display: inline-block;
+  width: 14px;
+  height: 14px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+  flex-shrink: 0;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty-state {
+  text-align: center;
+  padding: 48px 20px;
+  color: var(--text3);
+}
+.empty-icon { font-size: 36px; margin-bottom: 12px; }
+.empty-title { font-size: 15px; font-weight: 500; color: var(--text2); margin-bottom: 4px; }
+
+.divider { border: none; border-top: 1px solid var(--border); margin: 20px 0; }
+
+.update-section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.update-label { font-size: 13px; font-weight: 500; flex: 1; min-width: 200px; }
+.update-sub { font-size: 12px; color: var(--text3); font-weight: 400; display: block; }
+
+.tab-row {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 18px;
+}
+.tab-btn {
+  padding: 6px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text2);
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s;
+}
+.tab-btn.active { background: var(--text); color: white; border-color: var(--text); }
+.tab-btn:hover:not(.active) { background: var(--surface2); }
+
+.progress-bar {
+  height: 4px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+.progress-fill {
+  height: 100%;
+  background: var(--green);
+  border-radius: 2px;
+  transition: width 0.3s ease;
+}
+
+.google-icon { width: 16px; height: 16px; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="logo">
+    <div class="logo-mark">CC</div>
+    <div>
+      <div class="logo-text">CCF Welcome Center</div>
+      <div class="logo-sub">Miner Nudge Tool</div>
+    </div>
+  </div>
+  <div class="topbar-right" id="topbar-right"></div>
+</div>
+
+<div class="main" id="main"></div>
+
+<script>
+const SHEET_ID = '1wwooblcwXsyeNfeOg_40uY_6J54gBSj1CYvacCCN_Z8';
+const API_KEY = 'AIzaSyD0yOrXGWqSFQYJmaffVnVUhCcOs6jL1g8';
+const CLIENT_ID = '713322125380-uc9e2srfn57k8di08fgktvbjm72r0mf0.apps.googleusercontent.com';
+const SCOPES = 'https://www.googleapis.com/auth/spreadsheets';
+
+const COMPOUND = { 'alyssa jane': 'Alyssa Jane', 'mary grace': 'Mary Grace' };
+const STATUS_VALID = ['1','2','3a','3b','4'];
+const STATUS_LABELS = { '1':'Status 1','2':'Status 2','3a':'Status 3a','3b':'Status 3b','4':'Status 4' };
+
+let app = {
+  view: 'config',
+  imt: 'MR',
+  tabs: 'March 26, April 26',
+  sheetId: SHEET_ID,
+  miners: [],
+  sent: {},
+  open: {},
+  copied: {},
+  loading: false,
+  error: null,
+  success: null,
+  signedIn: false,
+  gapiReady: false,
+  updating: false,
+  updateMsg: null,
+  filter: 'all',
+  accessToken: null
+};
+
+function firstName(name) {
+  const low = name.toLowerCase().trim();
+  for (const [k,v] of Object.entries(COMPOUND)) { if (low.startsWith(k)) return v; }
+  return name.trim().split(/\s+/)[0].replace(/["']/g,'');
+}
+
+function fullName(d, e) {
+  const nick = d.match(/"([^"]+)"/);
+  const first = nick ? nick[1] : d.replace(/["']/g,'').split(/\s+/)[0];
+  const cap = s => s ? s.charAt(0).toUpperCase()+s.slice(1).toLowerCase() : '';
+  return [cap(first), cap(e)].filter(Boolean).join(' ');
+}
+
+function normalizeNum(raw) {
+  if (!raw) return null;
+  let n = String(raw).replace(/[\s\-\(\)\.]/g,'');
+  if (n.includes(',')) return null;
+  if (n.startsWith('09')) n = '+63'+n.slice(1);
+  else if (n.startsWith('639')) n = '+'+n;
+  return /^\+63\d{10}$/.test(n) ? n : null;
+}
+
+function buildMsg(mFirst, seekers) {
+  const groups = {};
+  for (const s of seekers) {
+    if (!groups[s.status]) groups[s.status]=[];
+    groups[s.status].push(s.name);
+  }
+  if (seekers.length === 1) {
+    const n = seekers[0].name, st = seekers[0].status;
+    const openers = {
+      '1': `Pa-follow up lang po sa seeker mo, kung na-reach out na po:\n\n• ${n}\n\nKung may concerns or need help, ping mo lang po ako. 🙏`,
+      '2': `Pa-confirm lang po sa seeker mo — na-contact mo na po ba si:\n\n• ${n}\n\nJust want to make sure di sila na-miss po. 😊`,
+      '3a': `Pa-follow up lang po — may update na po ba kayo ni:\n\n• ${n}\n\nKung wala pa pong response, ok lang po, just keep us posted. 🙏`,
+      '3b': `Pa-update lang po — saang DGroup po na-endorse si:\n\n• ${n}\n\nPara po ma-track natin attendance. 🌷`,
+      '4': `Pa-confirm lang po — naka-attend na po ba sa DGroup si:\n\n• ${n}\n\nExcited po kami malaman placement update. 🙏`
+    };
+    return `Hi po ${mFirst}, blessed Monday! 🌸\n${openers[st]||openers['2']}\nThank you po and God bless! 🙏✨`;
+  }
+  const sections = [
+    {k:'1', lbl:'Kung na-reach out na po:'},
+    {k:'2', lbl:'Kung na-contact na po:'},
+    {k:'3a', lbl:'May update na po ba (waiting for response):'},
+    {k:'3b', lbl:'Saang DGroup po na-endorse:'},
+    {k:'4', lbl:'Naka-attend na po ba sa DGroup:'},
+  ];
+  let msg = `Hi po ${mFirst}, blessed Monday! 🌸\nPa-follow up lang po sa mga seekers mo, kung may updates na po:\n`;
+  for (const sec of sections) {
+    const list = groups[sec.k]||[];
+    if (!list.length) continue;
+    msg += `\n${sec.lbl}\n`;
+    for (const n of list) msg += `• ${n}\n`;
+  }
+  return msg + `\nThank you po and God bless! 🙏✨`;
+}
+
+async function loadSheet() {
+  app.loading = true; app.error = null; app.miners = []; app.sent = {}; app.open = {}; render();
+  const tabs = app.tabs.split(',').map(t=>t.trim()).filter(Boolean);
+  const imt = app.imt.trim().toUpperCase();
+  const allRows = [];
+  for (const tab of tabs) {
+    const range = encodeURIComponent(`'${tab}'!A:O`);
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${app.sheetId}/values/${range}?key=${API_KEY}`;
+    try {
+      const r = await fetch(url);
+      if (!r.ok) { const e=await r.json(); throw new Error(e.error?.message||'Read failed'); }
+      const data = await r.json();
+      const rows = data.values||[];
+      for (let i=1; i<rows.length; i++) {
+        const row = rows[i];
+        const colA = (row[0]||'').trim().toUpperCase();
+        if (colA !== imt) continue;
+        const colD=row[3]||'', colE=row[4]||'', colJ=(row[9]||'').trim(), colK=(row[10]||'').trim();
+        const colM=(row[12]||'').trim(), colN=row[13]||'';
+        if (!colJ || !colK) continue;
+        const statusCode = colM.split(' ')[0].trim().toLowerCase();
+        if (!STATUS_VALID.includes(statusCode)) continue;
+        const num = normalizeNum(colK);
+        if (!num) continue;
+        allRows.push({ tab, rowIdx:i+1, colJ, number:num, statusCode, colN, name:fullName(colD,colE) });
+      }
+    } catch(e) {
+      app.loading=false; app.error=`Error reading "${tab}": ${e.message}`; render(); return;
+    }
+  }
+  const map = {};
+  for (const row of allRows) {
+    const k = row.number;
+    if (!map[k]) map[k]={name:row.colJ, number:k, first:firstName(row.colJ), rows:[], seekers:[]};
+    map[k].rows.push(row);
+    map[k].seekers.push({name:row.name, status:row.statusCode, tab:row.tab, rowIdx:row.rowIdx});
+  }
+  app.miners = Object.values(map)
+    .map(m=>({...m, message:buildMsg(m.first,m.seekers)}))
+    .sort((a,b)=>b.seekers.length-a.seekers.length);
+  app.loading=false; app.view='queue'; render();
+}
+
+async function updateColN() {
+  const sentIdxs = Object.keys(app.sent).filter(k=>app.sent[k]).map(Number);
+  if (!sentIdxs.length) { app.error='No miners marked as sent yet.'; render(); return; }
+  if (!app.accessToken) { app.error='Please sign in to Google first.'; render(); return; }
+  app.updating=true; app.error=null; app.updateMsg=null; render();
+  const today = new Date();
+  const ds = `${today.getMonth()+1}/${today.getDate()}/${today.getFullYear()}`;
+  const data = [];
+  for (const idx of sentIdxs) {
+    for (const row of app.miners[idx].rows) {
+      data.push({range:`'${row.tab}'!N${row.rowIdx}`, values:[[ds]]});
+    }
+  }
+  try {
+    const resp = await fetch(`https://sheets.googleapis.com/v4/spreadsheets/${app.sheetId}/values:batchUpdate`,{
+      method:'POST',
+      headers:{'Authorization':`Bearer ${app.accessToken}`,'Content-Type':'application/json'},
+      body:JSON.stringify({valueInputOption:'USER_ENTERED', data})
+    });
+    if (!resp.ok) { const e=await resp.json(); throw new Error(e.error?.message||'Update failed'); }
+    app.updating=false;
+    app.updateMsg=`Column N updated for ${data.length} row${data.length!==1?'s':''} across ${sentIdxs.length} miner${sentIdxs.length!==1?'s':''}.`;
+    render();
+  } catch(e) { app.updating=false; app.error=`Update failed: ${e.message}`; render(); }
+}
+
+function copyMsg(idx) {
+  navigator.clipboard.writeText(app.miners[idx].message).then(()=>{
+    app.copied[idx]=true; render();
+    setTimeout(()=>{ app.copied[idx]=false; render(); },2000);
+  });
+}
+
+function toggleSent(idx,e) {
+  e.stopPropagation();
+  app.sent[idx]=!app.sent[idx]; render();
+}
+
+function toggleOpen(idx) {
+  app.open[idx]=!app.open[idx]; render();
+}
+
+function initGapi() {
+  gapi.load('client', async ()=>{
+    await gapi.client.init({ apiKey:API_KEY, discoveryDocs:['https://sheets.googleapis.com/$discovery/rest?version=v4'] });
+    app.gapiReady=true; render();
+  });
+}
+
+function doSignIn() {
+  const client = google.accounts.oauth2.initTokenClient({
+    client_id: CLIENT_ID,
+    scope: SCOPES,
+    callback: (resp)=>{
+      if (resp.error) { app.error='Sign-in failed: '+resp.error; render(); return; }
+      app.signedIn=true; app.accessToken=resp.access_token; app.error=null; render();
+    }
+  });
+  client.requestAccessToken();
+}
+
+function initials(name) {
+  return name.trim().split(/\s+/).slice(0,2).map(w=>w[0]||'').join('').toUpperCase();
+}
+
+function esc(s) {
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+}
+
+function renderTopbar() {
+  const el = document.getElementById('topbar-right');
+  if (app.view==='queue') {
+    el.innerHTML = app.signedIn
+      ? `<div class="signin-badge"><div class="dot"></div>Google connected</div>`
+      : `<button class="btn btn-google btn-sm" onclick="doSignIn()">
+           <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+           Sign in to Google
+         </button>`;
+  } else { el.innerHTML=''; }
+}
+
+function render() {
+  renderTopbar();
+  const main = document.getElementById('main');
+
+  if (app.loading) {
+    main.innerHTML=`<div style="display:flex;align-items:center;gap:12px;padding:60px 0;color:var(--text2)"><div class="spinner"></div>Reading sheet, filtering MR rows...</div>`;
+    return;
+  }
+
+  if (app.view==='config') {
+    main.innerHTML=`
+<div class="page-title">Weekly follow-up</div>
+<p class="page-sub">Read the Harvests sheet, draft Taglish nudges, mark sends, update column N.</p>
+<div class="card">
+  <div class="card-title">Sheet settings</div>
+  <div class="field"><label>IMT initials</label><input id="imt" value="${esc(app.imt)}" style="max-width:80px"></div>
+  <div class="field"><label>Tabs to process (comma-separated)</label><input id="tabs" value="${esc(app.tabs)}"></div>
+  <div class="field"><label>Sheet ID</label><input id="sid" class="mono" value="${esc(app.sheetId)}"></div>
+  ${app.error?`<div class="alert alert-error"><span>⚠</span>${esc(app.error)}</div>`:''}
+  <div style="display:flex;gap:10px;align-items:center;margin-top:4px">
+    <button class="btn btn-primary" onclick="doLoad()">Load sheet</button>
+    <span style="font-size:12px;color:var(--text3)">Sign in to Google after loading (needed for column N updates)</span>
+  </div>
+</div>`;
+    return;
+  }
+
+  const sentCount = Object.values(app.sent).filter(Boolean).length;
+  const totalSeekers = app.miners.reduce((a,m)=>a+m.seekers.length,0);
+  const pct = app.miners.length ? Math.round(sentCount/app.miners.length*100) : 0;
+
+  const filtered = app.miners.filter((_,i)=>{
+    if (app.filter==='sent') return !!app.sent[i];
+    if (app.filter==='unsent') return !app.sent[i];
+    return true;
+  });
+
+  const cards = filtered.map((m,fi)=>{
+    const realIdx = app.miners.indexOf(m);
+    const isSent=!!app.sent[realIdx], isOpen=!!app.open[realIdx], isCopied=!!app.copied[realIdx];
+    const statuses=[...new Set(m.seekers.map(s=>s.status))];
+    const badgeHtml=statuses.map(st=>`<span class="badge badge-${st}">${st.toUpperCase()}</span>`).join('');
+    return `
+<div class="miner-card${isSent?' is-sent':''}">
+  <div class="miner-head" onclick="toggleOpen(${realIdx})">
+    <div class="avatar">${initials(m.name)}</div>
+    <div class="miner-info">
+      <div class="miner-name">${esc(m.name)}</div>
+      <div class="miner-meta">
+        <span class="number-tag">${esc(m.number)}</span>
+        <span>${m.seekers.length} seeker${m.seekers.length!==1?'s':''}</span>
+        ${badgeHtml}
+      </div>
+    </div>
+    ${isSent?`<div class="sent-pill"><div class="dot"></div>Sent</div>`:''}
+    <span class="chevron${isOpen?' open':''}">&#8964;</span>
+  </div>
+  ${isOpen?`<div class="miner-body open">
+    <div class="seeker-list">
+      ${m.seekers.map(s=>`<div class="seeker-row"><span class="seeker-name">${esc(s.name)}</span><span class="badge badge-${s.status}">${s.status.toUpperCase()}</span><span style="font-size:11px;color:var(--text3)">${s.tab}</span></div>`).join('')}
+    </div>
+    <div class="msg-preview">${esc(m.message)}</div>
+    <div class="miner-actions">
+      <button class="btn btn-copy btn-sm${isCopied?' copied':''}" onclick="copyMsg(${realIdx})">${isCopied?'Copied!':'Copy message'}</button>
+      <button class="btn btn-sm ${isSent?'btn-sent-toggle':'btn-unsent'}" onclick="toggleSent(${realIdx},event)">${isSent?'Mark unsent':'Mark as sent'}</button>
+    </div>
+  </div>`:`<div class="miner-body"></div>`}
+</div>`;
+  }).join('');
+
+  main.innerHTML=`
+<div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:4px">
+  <div class="page-title">Queue</div>
+  <button class="btn btn-ghost btn-sm" onclick="goConfig()">&#8592; Back to config</button>
+</div>
+<p class="page-sub" style="margin-bottom:16px">${new Date().toLocaleDateString('en-PH',{weekday:'long',year:'numeric',month:'long',day:'numeric'})}</p>
+
+<div class="metrics">
+  <div class="metric"><div class="metric-val">${app.miners.length}</div><div class="metric-lbl">Miners</div></div>
+  <div class="metric"><div class="metric-val">${totalSeekers}</div><div class="metric-lbl">Seekers</div></div>
+  <div class="metric highlight"><div class="metric-val">${sentCount}</div><div class="metric-lbl">Sent</div></div>
+  <div class="metric"><div class="metric-val">${app.miners.length-sentCount}</div><div class="metric-lbl">Remaining</div></div>
+</div>
+
+<div class="progress-bar"><div class="progress-fill" style="width:${pct}%"></div></div>
+
+<div class="update-section">
+  <div class="update-label">
+    Update column N
+    <span class="update-sub">${sentCount} miner${sentCount!==1?'s':''} marked sent &mdash; write today's date to their rows</span>
+  </div>
+  ${app.updating
+    ? `<button class="btn btn-primary" disabled><span class="spinner" style="border-top-color:white"></span> Updating...</button>`
+    : `<button class="btn btn-primary" onclick="updateColN()" ${!app.signedIn||!sentCount?'disabled':''}>${!app.signedIn?'Sign in first':sentCount?'Update column N':'Mark miners sent first'}</button>`
+  }
+  ${!app.signedIn?`<button class="btn btn-google btn-sm" onclick="doSignIn()">
+    <svg class="google-icon" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+    Sign in
+  </button>`:''}
+</div>
+
+${app.error?`<div class="alert alert-error" style="margin-bottom:14px"><span>⚠</span>${esc(app.error)}</div>`:''}
+${app.updateMsg?`<div class="alert alert-success" style="margin-bottom:14px"><span>✓</span>${esc(app.updateMsg)}</div>`:''}
+
+<div class="tab-row">
+  <button class="tab-btn${app.filter==='all'?' active':''}" onclick="setFilter('all')">All (${app.miners.length})</button>
+  <button class="tab-btn${app.filter==='unsent'?' active':''}" onclick="setFilter('unsent')">Remaining (${app.miners.length-sentCount})</button>
+  <button class="tab-btn${app.filter==='sent'?' active':''}" onclick="setFilter('sent')">Sent (${sentCount})</button>
+</div>
+
+${filtered.length===0?`<div class="empty-state"><div class="empty-icon">&#10003;</div><div class="empty-title">All done for this filter</div></div>`:cards}`;
+}
+
+function doLoad() {
+  app.imt = document.getElementById('imt').value.trim().toUpperCase()||'MR';
+  app.tabs = document.getElementById('tabs').value||'March 26, April 26';
+  app.sheetId = document.getElementById('sid').value.trim()||SHEET_ID;
+  loadSheet();
+}
+
+function goConfig() {
+  app.view='config'; app.error=null; app.updateMsg=null; render();
+}
+
+function setFilter(f) { app.filter=f; render(); }
+
+window.doLoad=doLoad; window.goConfig=goConfig; window.doSignIn=doSignIn;
+window.copyMsg=copyMsg; window.toggleSent=toggleSent; window.toggleOpen=toggleOpen;
+window.updateColN=updateColN; window.setFilter=setFilter; window.initGapi=initGapi;
+
+render();
+</script>
+
+<script src="https://apis.google.com/js/api.js" onload="initGapi()"></script>
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+</body>
+</html>
