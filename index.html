@@ -562,8 +562,9 @@ async function loadSheet() {
   const imt = app.imt.trim().toUpperCase();
   const allRows = [];
   for (const tab of tabs) {
-    const range = encodeURIComponent(`'${tab}'!A:O`);
-    const url = `https://sheets.googleapis.com/v4/spreadsheets/${app.sheetId}/values/${range}?key=${API_KEY}`;
+    const safeTab = tab.replace(/'/g, "''");
+    const encodedRange = encodeURIComponent(`'${safeTab}'!A:O`);
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${app.sheetId}/values/${encodedRange}?key=${API_KEY}`;
     try {
       const r = await fetch(url);
       if (!r.ok) { const e=await r.json(); throw new Error(e.error?.message||'Read failed'); }
